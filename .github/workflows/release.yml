@@ -23,7 +23,7 @@ jobs:
       - name: Build Packages
         run: |
           chmod +x build_packages.sh
-          ./build_packages.sh
+          ./build_packages.sh ${{ github.event.release.tag_name }}
 
       - name: Upload Assets
         uses: AButler/upload-release-assets@v2.0
