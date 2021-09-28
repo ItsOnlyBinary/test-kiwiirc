@@ -15,14 +15,10 @@ jobs:
         with:
           repository: 'kiwiirc/kiwiirc_packager'
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-          registry-url: 'https://registry.npmjs.org/'
-
-      - name: Setup Golang
-        uses: actions/setup-go@v2
+      - name: Install Dependencies
+        run: |
+          chmod +x ubuntu_debian_dependancies.sh
+          ./ubuntu_debian_dependancies.sh
 
       - name: Build Packages
         run: |
