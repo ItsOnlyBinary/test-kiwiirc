@@ -29,3 +29,4 @@ jobs:
         uses: AButler/upload-release-assets@v2.0
         with:
           files: 'packaged/*'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
