@@ -30,3 +30,36 @@ jobs:
         with:
           files: 'packaged/*'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+  build-desktop-linux:
+    name: Build Desktop (linux/windows)
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: 'kiwiirc/kiwiirc-desktop'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Setup Dependencies
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm libarchive-tools gcc-multilib g++-multilib wine wine32
+
+      - name: Build
+        run: |
+          yarn update:version
+          yarn build:kiwi
+          yarn build:dist --win --linux
+
+      - name: Upload Assets
+        uses: AButler/upload-release-assets@v2.0
+        with:
+          files: 'build/kiwiirc-desktop*.{deb,rpm,exe,zip}'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
