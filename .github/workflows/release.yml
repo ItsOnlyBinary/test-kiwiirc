@@ -50,7 +50,8 @@ jobs:
       - name: Setup Dependencies
         run: |
           sudo dpkg --add-architecture i386
-          sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm libarchive-tools gcc-multilib g++-multilib wine wine32
+          sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm libarchive-tools gcc-multilib g++-multilib
+          sudo apt-get install -y wine wine32
 
       - name: Build
         run: |
