@@ -57,7 +57,7 @@ jobs:
         run: |
           yarn
           yarn version --no-git-tag-version --new-version ${{ github.event.release.tag_name }}
-          yarn build:dist --win --linux
+          yarn build:dist --win --linux --publish never
 
       - name: Upload Assets
         uses: AButler/upload-release-assets@v2.0
