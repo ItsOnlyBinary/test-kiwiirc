@@ -55,8 +55,8 @@ jobs:
 
       - name: Build
         run: |
+          yarn
           yarn update:version
-          yarn build:kiwi
           yarn build:dist --win --linux
 
       - name: Upload Assets
