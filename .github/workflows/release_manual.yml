@@ -1,8 +1,16 @@
-name: Release workflow
+name: Manual release workflow
 
 on:
-  release:
-    types: [created]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Build tag'
+        required: true
+        default: 'v'
+      iteration:
+        description: 'Build iteration'
+        required: true
+        default: '1'
 
 jobs:
   build-packages:
@@ -23,11 +31,11 @@ jobs:
       - name: Build Packages
         run: |
           chmod +x build_packages.sh
-          ./build_packages.sh -t ${{ github.event.release.tag_name }}
+          ./build_packages.sh -t ${{ github.event.inputs.tag }} -i ${{ github.event.inputs.iteration }}
 
       - name: Upload Assets
         uses: AButler/upload-release-assets@v2.0
         with:
           files: 'dist/*'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          release-tag: ${{ github.event.release.tag_name }}
+          release-tag: ${{ github.event.inputs.tag }}
